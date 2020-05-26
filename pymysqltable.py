@@ -22,16 +22,14 @@ except Exception as e:
    VALUES ('%s', '%d', '%s')" % \
    (ip, seconds, lastboot)"""
 
-for ip in im.uptime.keys():
-    for stat in im.uptime[ip].values():
-        insert = "INSERT INTO stats (ip, seconds, lastboot) \
-        VALUES ('%s', '%s', '%s')" % \
-        (ip, stat, stat)
-        try:
-            cursor.execute(insert)
-            connection.commit()
-        except:
-            connection.rollback()
+for key, value in im.uptime.items():
+    insert = "INSERT INTO stats (ip, seconds, lastboot) \
+    VALUES ('{}', '{}', '{}')".format(key, value['seconds'], value['lastboot'])
+    try:
+        cursor.execute(insert)
+        connection.commit()
+    except:
+        connection.rollback()
 
 #try:
 #   cursor.execute(insert)

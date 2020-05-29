@@ -1,0 +1,3 @@
+#cron naredba za automatsko izvršavanje koda svake minute
+* * * * * cd /home/dinko/Desktop/nmap/piton && /usr/bin/python3.6 pymysqltable.py 
+#> /home/dinko/Desktop/nmap/piton/cronlog.log 2>&1 - ispis rezultata u log

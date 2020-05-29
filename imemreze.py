@@ -4,7 +4,7 @@ import settings as s #za NET_ADDR I NMAP_ARGS
 #dodjeljivanje scana varijabli
 scanner = nmap.PortScanner()
 
-#umjesto statičke IP adrese i argumenata za nmap, iz settings.py se povlače s.NMAP_ADDR i sNMAP_ARGS
+#umjesto staticke IP adrese i argumenata za nmap, iz settings.py se povlace s.NMAP_ADDR i sNMAP_ARGS
 scanner.scan(s.NET_ADDR, arguments = s.NMAP_ARGS + " --exclude " + s.EXCLUDE_IPS)
 print(scanner.command_line())
 print(scanner.scaninfo())

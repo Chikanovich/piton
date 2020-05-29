@@ -1,3 +1,5 @@
+import sys
+sys.path.append('/home/dinko/.local/lib/python3.6/site-packages')
 import pymysql
 import imemreze as im
 
@@ -5,7 +7,7 @@ import imemreze as im
 connection = pymysql.connect("localhost","dinko","Dinko_Pass_1","Netscanner")
 cursor = connection.cursor()
 
-#query za brisanje postojeće tablice
+#query za brisanje postojece tablice
 delete_existing_table = "DROP TABLE IF EXISTS stats"
 
 #query za stvaranje nove tablice

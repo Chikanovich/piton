@@ -1,0 +1,64 @@
+nmap -oX - -O -F -sN -PE -PA21,22,23,80,3389 --exclude 192.168.1.107 192.168.1.0/24
+{'tcp': {'method': 'null', 'services': '7,9,13,21-23,25-26,37,53,79-81,88,106,110-111,113,119,135,139,143-144,179,199,389,427,443-445,465,513-515,543-544,548,554,587,631,646,873,990,993,995,1025-1029,1110,1433,1720,1723,1755,1900,2000-2001,2049,2121,2717,3000,3128,3306,3389,3986,4899,5000,5009,5051,5060,5101,5190,5357,5432,5631,5666,5800,5900,6000-6001,6646,7070,8000,8008-8009,8080-8081,8443,8888,9100,9999-10000,32768,49152-49157'}}
+['192.168.1.1', '192.168.1.100', '192.168.1.106']
+-------------------
+Host: 192.168.1.1 ( Gateway.Home )
+State: up
+MAC: 64:6E:EA:35:4B:80
+dict_keys([21, 22, 23, 80, 139, 443, 445])
+dict_keys(['hostnames', 'addresses', 'vendor', 'status', 'tcp', 'portused', 'osmatch'])
+['tcp']
+-------------------
+Port: 21 	State: open|filtered
+Port: 22 	State: open|filtered
+Port: 23 	State: open|filtered
+Port: 80 	State: open|filtered
+Port: 139 	State: open|filtered
+Port: 443 	State: open|filtered
+Port: 445 	State: open|filtered
+-------------------
+Host: 192.168.1.100 (  )
+State: up
+MAC: 80:3F:5D:44:6A:9C
+dict_keys([53, 80])
+dict_keys(['hostnames', 'addresses', 'vendor', 'status', 'tcp', 'portused', 'osmatch'])
+['tcp']
+-------------------
+Port: 53 	State: open|filtered
+Port: 80 	State: open|filtered
+-------------------
+Host: 192.168.1.106 ( android-cf94a11105c45156 )
+State: up
+MAC: 74:72:B0:C2:ED:9E
+dict_keys([8000])
+dict_keys(['hostnames', 'addresses', 'vendor', 'status', 'tcp', 'portused', 'osmatch'])
+['tcp']
+-------------------
+Port: 8000 	State: open|filtered
+
+
+IP & MAC: {'ipv4': '192.168.1.1', 'mac': '64:6E:EA:35:4B:80'} 
+State: up 
+Host names: [{'name': 'Gateway.Home', 'type': 'PTR'}] 
+Vendor: {'64:6E:EA:35:4B:80': 'Iskratel d.o.o.'} 
+Uptime: {'seconds': '1308415', 'lastboot': 'Thu May 14 12:24:16 2020'}
+------------------------------------------------------
+IP & MAC: {'ipv4': '192.168.1.100', 'mac': '80:3F:5D:44:6A:9C'} 
+State: up 
+Host names: [{'name': '', 'type': ''}] 
+Vendor: {'80:3F:5D:44:6A:9C': 'Winstars Technology'} 
+Uptime: {'seconds': '621885', 'lastboot': 'Fri May 22 11:06:26 2020'}
+------------------------------------------------------
+IP & MAC: {'ipv4': '192.168.1.106', 'mac': '74:72:B0:C2:ED:9E'} 
+State: up 
+Host names: [{'name': 'android-cf94a11105c45156', 'type': 'PTR'}] 
+Vendor: {'74:72:B0:C2:ED:9E': 'Guangzhou Shiyuan Electronics'} 
+Uptime: {'seconds': '12345', 'lastboot': 'Fri May 29 12:25:26 2020'}
+------------------------------------------------------
+Existing table has been deleted.
+New 'stats' table has been created.
+
+
+id = 1, ip = 192.168.1.1, hostname = Gateway.Home, name = Iskratel d.o.o., seconds = 1308415, lastboot = Thu May 14 12:24:16 2020, MAC = 64:6E:EA:35:4B:80
+id = 2, ip = 192.168.1.100, hostname = , name = Winstars Technology, seconds = 621885, lastboot = Fri May 22 11:06:26 2020, MAC = 80:3F:5D:44:6A:9C
+id = 3, ip = 192.168.1.106, hostname = android-cf94a11105c45156, name = Guangzhou Shiyuan Electronics, seconds = 12345, lastboot = Fri May 29 12:25:26 2020, MAC = 74:72:B0:C2:ED:9E

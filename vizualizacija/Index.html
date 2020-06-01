@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+	<style>
+
+		.bar{
+			fill: blue;
+		}
+
+		.bar:hover{
+			fill: red;
+		}
+
+		.axis {
+			font: 10px sans-serif;
+		}
+
+		.axis path,
+		.axis line {
+			fill: none;
+			stroke: #000;
+			shape-rendering: crispEdges;
+		}
+	
+		div.tooltip {	
+			position: absolute;			
+			text-align: center;
+			color: white;	
+			width: auto;					
+			height: auto;					
+			padding: 2px;				
+			font: 12px sans-serif;		
+			background: blue;	
+			border: 0px;		
+			border-radius: 8px;			
+			pointer-events: none;
+		}			
+
+	</style>
+</head>
+
+<body>
+
+	<script src="d3/d3.v3.js"></script>
+
+	<script>
+		// postavljanje dimenzija na kojoj će se vizualizacija izvoditi
+		var margin = {top: 20, right: 20, bottom: 70, left: 100},
+			width = 1000 - margin.left - margin.right,
+			height = 500 - margin.top - margin.bottom;
+		
+		
+		// postavljanje granica grafa
+		var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
+		
+		var y = d3.scale.linear().range([height, 0]);
+		
+		// određivanje x i y osi
+		var xAxis = d3.svg.axis()
+			.scale(x)
+			.orient("bottom")
+		
+		
+		var yAxis = d3.svg.axis()
+			.scale(y)
+			.orient("left")
+			.ticks(10);
+		
+		// div element za tooltip
+		var div = d3.select("body").append("div")	
+			.attr("class", "tooltip")				
+			.style("opacity", 0);
+		
+		// dodavanje SVG elemenata
+		var svg = d3.select("body").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+		.append("g")
+			.attr("transform", 
+				"translate(" + margin.left + "," + margin.top + ")");
+		
+		
+		// učitavanje podataka u json formatu
+		d3.json("http://127.0.0.1:5000/stats", function(error, data) {
+		
+			data.forEach(function(d) {
+				d.hostname = d.hostname;
+				d.seconds = +d.seconds;
+			});
+			
+		// određivanje granica podataka
+		x.domain(data.map(function(d) { return d.hostname; }));
+		y.domain([0, d3.max(data, function(d) { return d.seconds; })]);
+		
+		// dodavanje osi u SVG
+		svg.append("g")
+			.attr("class", "x axis")
+			.attr("transform", "translate(0," + height + ")")
+			.call(xAxis)
+			.selectAll("text")
+			// ovisno o tome žele li se rotirati nazivi, potrebno je odkomentirati ove dvije linije
+			//.style("text-anchor", "end")
+			//.attr("transform", "rotate(-90)" );
+			.attr("dx", "-.8em")
+			.attr("dy", "1em")
+		
+		svg.append("g")
+			.attr("class", "y axis")
+			.call(yAxis)
+			.append("text")
+			.attr("transform", "rotate(-90)")
+			.attr("y", 0)
+			.attr("dy", "-2em")
+			//.style("font-size", "14px")
+			.style("text-anchor", "end")
+			.text("seconds");
+		
+		// dodavanje grafa
+		svg.selectAll("bar")
+			.data(data)
+			.enter()
+			.append("rect")
+			.attr("x", function(d) { return x(d.hostname); })
+			.attr("width", x.rangeBand())
+			.attr("class", "bar")
+			.attr("height", function(d) { return height - y(0); })
+			.attr("y", function(d) { return y(0); })
+			.on("mouseover", function(d) {		
+				div.transition()		
+					.duration(200)		
+					.style("opacity", .9);		
+				div	.html(d.ip + "<br/>"  + d.hostname + "<br/>" + d.vendor + "<br/>" + d.seconds + "<br/>" + d.lastboot + "<br/>" + d.MAC)	
+					.style("left", (d3.event.pageX) + "px")		
+					.style("top", (d3.event.pageY - 28) + "px");	
+				})					
+			.on("mouseout", function(d) {		
+				div.transition()		
+					.duration(500)		
+					.style("opacity", 0);
+					});
+		
+		// animacija
+		svg.selectAll("rect")
+			.transition()
+			.duration(800)
+			.attr("y", function(d) { return y(d.seconds); })
+			.attr("height", function(d) { return height - y(d.seconds); })
+			.delay(function(d,i){console.log(i) ; return(i*100)})
+		});
+		
+	</script>
+
+</body>

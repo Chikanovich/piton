@@ -3,7 +3,7 @@ from flaskext.mysql import MySQL
 
 mysql = MySQL()
 
-# MySQL configurations
+# mysql podaci za logiranje kako bi se mogli povući podaci za REST API
 app.config["MYSQL_DATABASE_USER"] = "dinko"
 app.config["MYSQL_DATABASE_PASSWORD"] = "Dinko_Pass_1"
 app.config["MYSQL_DATABASE_DB"] = "Netscanner"

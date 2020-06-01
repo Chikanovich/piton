@@ -36,7 +36,6 @@ scanner.scan(s.NET_ADDR, arguments=s.NMAP_ARGS2 + " --exclude " + s.EXCLUDE_IPS)
 for h in scanner.all_hosts():
     #print(dir(scanner[h])) - provjera svih varijabli koje se mogu koristiti, koje su privatne, a koje ne
     if 'mac' in scanner[h]['addresses']:
-        #print(scanner[h]['hostnames'][0]['name'])
         try:
             print("IP & MAC:", scanner[h]['addresses'], "\nState:", scanner[h]['status']['state'], "\nHost names:", 
             scanner[h]['hostnames'], "\nVendor:", scanner[h]['vendor'], "\nUptime:", scanner[h]['uptime'])
@@ -49,9 +48,13 @@ for h in scanner.all_hosts():
             print("IP & MAC:", scanner[h]['addresses'], "\nState:", scanner[h]['status']['state'], "\nHost names:", 
             scanner[h]['hostnames'], "\nVendor:", scanner[h]['vendor'], "\nUptime:", scanner[h]['uptime'])
             print('------------------------------------------------------')
-            scanner[h]['uptime']['seconds'] = int(scanner[h]['uptime']['seconds']) #parsiranje sekundi iz stringa u int za rad s vizualizacijom
+            scanner[h]['uptime']['seconds'] = int(scanner[h]['uptime']['seconds'])
             mydict[h] = scanner[h]['vendor'], scanner[h]['uptime'], scanner[h]['hostnames']
-"""print('\n')
+
+"""
+za potrebe testiranja, ispis dictionaryja prije nego se sprema u mysql tablicu
+print('\n')
 print(mydict)
 print(mydict.keys())
-print(mydict.values())"""
+print(mydict.values())
+break"""

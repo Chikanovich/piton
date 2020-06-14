@@ -4,7 +4,8 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/home/dinko/Desktop/nmap/piton/vizualizacija/index.html")
+#@app.route("/home/dinko/Desktop/nmap/piton/vizualizacija/index.html")
+@app.route("/home/dinko/Desktop/projekt/index.html")
 def helloWorld():
   return "Hello, cross-origin-world!"
 

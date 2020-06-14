@@ -11,8 +11,11 @@ cursor = connection.cursor()
 delete_existing_table = "DROP TABLE IF EXISTS stats"
 
 #query za stvaranje nove tablice
+"""create_table_query = "CREATE TABLE stats (id int(50) not null auto_increment primary key, \
+     ip VARCHAR(20) NOT NULL, hostname VARCHAR(30), vendor VARCHAR(30) NOT NULL, seconds int(50) NOT NULL, lastboot VARCHAR(50) NOT NULL, MAC VARCHAR(20) NOT NULL)"""
+
 create_table_query = "CREATE TABLE stats (id int(50) not null auto_increment primary key, \
-     ip VARCHAR(20) NOT NULL, hostname VARCHAR(30), vendor VARCHAR(30) NOT NULL, seconds int(50) NOT NULL, lastboot VARCHAR(50) NOT NULL, MAC VARCHAR(20) NOT NULL)"
+     vendor VARCHAR(30) NOT NULL, ip VARCHAR(20) NOT NULL, MAC VARCHAR(20) NOT NULL, hostname VARCHAR(30), time VARCHAR(30) NOT NULL)"
 
 #brisanje stare tablice i stvaranje nove tablice
 try:
@@ -25,12 +28,20 @@ except:
     print("Exception occured. Could not create table.")
 
 #unos vrijednosti u tablicu
-for key, value in im.mydict.items():
+"""for key, value in im.mydict.items():
     (MAC, vendor), = value[0].items()
     seconds, lastboot = value[1].items()
     hostname = value[2]
-    insert = "INSERT INTO stats (ip, hostname, vendor, seconds, lastboot, MAC) \
-    VALUES ('{}', '{}', '{}', '{}', '{}', '{}')".format(key, hostname[0]['name'], vendor, seconds[1], lastboot[1], MAC)
+    insert = "INSERT INTO stats (vendor, ip, MAC, hostname, time) \
+    VALUES ('{}', '{}', '{}', '{}', '{}')".format(key, hostname[0]['name'], vendor, seconds[1], lastboot[1], MAC)"""
+
+for key, value in im.mydict.items():
+    (MAC, vendor), = value[0].items()
+    ip = value[1]
+    hostname = value[2]
+    time = value[3]
+    insert = "INSERT INTO stats (vendor, ip, MAC, hostname, time) \
+    VALUES ('{}', '{}', '{}', '{}', '{}')".format(vendor, ip['ipv4'], MAC, hostname[0]['name'], time)
 
     try:
         cursor.execute(insert)
@@ -49,14 +60,13 @@ try:
    results = cursor.fetchall()
    for row in results:
       id = row[0]
-      ip = row[1]
-      hostname = row[2]
-      vendor = row[3]
-      seconds = row[4]
-      lastboot = row[5]
-      MAC = row[6]
-      print ("id = %d, ip = %s, hostname = %s, name = %s, seconds = %d, lastboot = %s, MAC = %s" % \
-         (id, ip, hostname, vendor, seconds, lastboot, MAC))
+      vendor = row[1]
+      ip = row[2]
+      MAC = row[3]
+      hostname = row[4]
+      time = row[5]
+      print ("id = %d, vendor = %s, ip = %s, MAC = %s, hostname = %s, time = %s" % \
+         (id, vendor, ip, MAC, hostname, time))
 except:
    print ("Error: unable to fetch data")
 

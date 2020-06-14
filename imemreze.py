@@ -1,5 +1,6 @@
 import nmap
 import settings as s #za NET_ADDR I NMAP_ARGS
+import datetime
 
 #dodjeljivanje scana varijabli
 scanner = nmap.PortScanner()
@@ -32,7 +33,7 @@ print("\n")
 mydict = {}
 
 #spremanje scana u dictionary
-scanner.scan(s.NET_ADDR, arguments=s.NMAP_ARGS2 + " --exclude " + s.EXCLUDE_IPS)
+"""scanner.scan(s.NET_ADDR, arguments=s.NMAP_ARGS2 + " --exclude " + s.EXCLUDE_IPS)
 for h in scanner.all_hosts():
     #print(dir(scanner[h])) - provjera svih varijabli koje se mogu koristiti, koje su privatne, a koje ne
     if 'mac' in scanner[h]['addresses']:
@@ -40,7 +41,7 @@ for h in scanner.all_hosts():
             print("IP & MAC:", scanner[h]['addresses'], "\nState:", scanner[h]['status']['state'], "\nHost names:", 
             scanner[h]['hostnames'], "\nVendor:", scanner[h]['vendor'], "\nUptime:", scanner[h]['uptime'])
             print('------------------------------------------------------')
-            scanner[h]['uptime']['seconds'] = int(scanner[h]['uptime']['seconds']) #parsiranje sekundi iz stringa u int za rad s vizualizacijom
+            scanner[h]['uptime']['seconds'] = int(scanner[h]['uptime']['seconds'])
             mydict[h] = scanner[h]['vendor'], scanner[h]['uptime'], scanner[h]['hostnames']
         except KeyError:
             print(scanner[h]['hostnames'][0]['name'], "has no value of uptime and lastboot.")
@@ -49,7 +50,18 @@ for h in scanner.all_hosts():
             scanner[h]['hostnames'], "\nVendor:", scanner[h]['vendor'], "\nUptime:", scanner[h]['uptime'])
             print('------------------------------------------------------')
             scanner[h]['uptime']['seconds'] = int(scanner[h]['uptime']['seconds'])
-            mydict[h] = scanner[h]['vendor'], scanner[h]['uptime'], scanner[h]['hostnames']
+            mydict[h] = scanner[h]['vendor'], scanner[h]['uptime'], scanner[h]['hostnames']"""
+
+
+
+scanner.scan(s.NET_ADDR, arguments=s.NMAP_ARGS2 + " --exclude " + s.EXCLUDE_IPS)
+for h in scanner.all_hosts():
+    if 'mac' in scanner[h]['addresses']:
+        now = datetime.datetime.now()
+        print("Vendor:", scanner[h]['vendor'], "\nIP & MAC:", scanner[h]['addresses'], "\nHost names:", scanner[h]['hostnames'], 
+        "\nTime:", now.strftime("%Y-%m-%d %H:%M:%S"))
+        print('------------------------------------------------------')
+        mydict[h] = scanner[h]['vendor'], scanner[h]['addresses'], scanner[h]['hostnames'], now.strftime("%Y-%m-%d %H:%M:%S")
 
 """
 za potrebe testiranja, ispis dictionaryja prije nego se sprema u mysql tablicu

@@ -15,7 +15,7 @@ def user():
         #dohvaćanje svih podataka iz databaze, pretvaranje u .json format i odgovor "200"
         #ukoliko je komunikacija između korisnika i servera uspješno izvršena
         rows = cur.fetchall()
-        resp = jsonify(rows)
+        resp = jsonify({'data':rows})
         resp.status_code = 200
         return resp
     except Exception as e:
